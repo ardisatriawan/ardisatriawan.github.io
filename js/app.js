@@ -6,7 +6,12 @@ myApp.config(function($routeProvider) {
 	.when('/bo2016', {
 		templateUrl : './partials/home.html',
 		controller  : 'mainController'
+	})
+	.otherwise({
+		templateUrl : './partials/404.html',
+		controller  : 'mainController'
 	});
+	;
 });
 	
 myApp.controller('mainController', ['$scope', function($scope) {
