@@ -1,4 +1,13 @@
 var myApp = angular.module('compApp',['ngRoute']);
+
+myApp.config(function($routeProvider) {
+	$routeProvider
+	// route for the home page
+	.when('/bo2016', {
+		templateUrl : './partials/home.html',
+		controller  : 'mainController'
+	});
+});
 	
 myApp.controller('mainController', ['$scope', function($scope) {
 	// default template: home.html
