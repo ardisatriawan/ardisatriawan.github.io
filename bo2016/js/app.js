@@ -11,12 +11,11 @@ myApp.config(function($routeProvider) {
 		templateUrl : './partials/404.html',
 		controller  : 'mainController'
 	});
-	;
 });
 	
 myApp.controller('mainController', ['$scope', function($scope) {
 	// default template: home.html
-	$scope.templateUrl = './partials/home.html';
+	//$scope.templateUrl = './partials/home.html';
 	
 	$scope.openpage = function(partial) {
 		if (partial == 'home') {
