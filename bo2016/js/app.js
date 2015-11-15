@@ -1,10 +1,35 @@
 var myApp = angular.module('compApp',['ngRoute']);
 
+var comp = {
+	'shortName':'bo2016',
+	'longName':'Bandung Open 2016'
+};
+
 myApp.config(function($routeProvider) {
 	$routeProvider
 	// route for the home page
-	.when('/bo2016', {
+	.when('/', {
 		templateUrl : './partials/home.html',
+		controller  : 'mainController'
+	})
+	.when('/schedule', {
+		templateUrl : './partials/schedule.html',
+		controller  : 'mainController'
+	})
+	.when('/venue', {
+		templateUrl : './partials/venue.html',
+		controller  : 'mainController'
+	})
+	.when('/registration', {
+		templateUrl : './partials/registration.html',
+		controller  : 'mainController'
+	})
+	.when('/competitors', {
+		templateUrl : './partials/competitors.html',
+		controller  : 'mainController'
+	})
+	.when('/contact', {
+		templateUrl : './partials/contact.html',
 		controller  : 'mainController'
 	})
 	.otherwise({
@@ -12,29 +37,8 @@ myApp.config(function($routeProvider) {
 		controller  : 'mainController'
 	});
 });
-	
-myApp.controller('mainController', ['$scope', function($scope) {
-	// default template: home.html
-	//$scope.templateUrl = './partials/home.html';
-	
-	$scope.openpage = function(partial) {
-		if (partial == 'home') {
-			$scope.templateUrl = './partials/home.html';
-		}
-		else if (partial == 'schedule') {
-			$scope.templateUrl = './partials/schedule.html';
-		}
-		else if (partial == 'venue') {
-			$scope.templateUrl = './partials/venue.html';
-		}
-		else if (partial == 'registration') {
-			$scope.templateUrl = './partials/registration.html';
-		}
-		else if (partial == 'competitors') {
-			$scope.templateUrl = './partials/competitors.html';
-		}
-		else if (partial == 'contact') {
-			$scope.templateUrl = './partials/contact.html';
-		}
-	}
+
+myApp.controller('mainController', ['$scope', '$rootScope', function($scope, $rootScope) {
+	/** fill the controller here**/
+	$scope.comp = comp;
 }]);
