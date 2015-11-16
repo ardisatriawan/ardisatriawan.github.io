@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<title>Double Cross Method for Clock - Ardianto Satriawan</title>
+</head>
+<body>
+	<div class="container">
+		<h1>Double Cross Method for Clock</h1>
+		<!--
+		<div id="menu">
+			<a href="#education">Education</a> | <a href="#work">Work Experiences</a> | <a href="#teaching">Teaching</a> | <a href="#courseworks">Courseworks</a> | <a href="#paper">Papers</a> | <a href="#achievements">Achievements</a>
+		</div>
+		-->
+		<!--
+		<table>
+			<tr>
+				<td>
+					<img src="./img/me.jpeg" width="100" alt="me.jpeg">
+				</td>
+				<td>
+					<p>Hello, welcome to my website. My name is Ardianto Satriawan.  I hold a Master in Electrical Engineering degree from <a href="http://www.stei.itb.ac.id">School of Electrical Engineering and Informatics</a>, <a href="http://www.itb.ac.id">Institut Teknologi Bandung (ITB)</a>, Indonesia. You can reach me via <a href="mailto:ardiantosatriawan@gmail.com">E-mail</a>, <a href="http://facebook.com/ardiantosatriawan">Facebook</a>, and <a href="http://twitter.com/ardisatriawan">Twitter</a>. Also you may be interested to read <a href="http://ardiantosatriawan.wordpress.com">my blog</a> (in Bahasa Indonesia).</p>
+				</td>
+			</tr>
+		</table>
+		-->
+		
+		<p>Few years ago (2011), during a local gathering in my city, Bandung, we discuss a "method" to solve a Rubik's Clock. Usually the steps involved on solving clock are the following:
+		<ol>
+			<li>Cross on Front Face, then align to 12.</li>
+			<li>Flip the clock.</li>
+			<li>Cross on Back Face</li>
+			<li>Solve the corners</li>
+		</ol>
+		My friend, <a href="https://www.worldcubeassociation.org/results/p.php?i=2011TAUF01">Fahmi Taufiqulhadi</a>, proposed that probably we can do step 1 and 3 altogether. So the method will be:
+		<ol>
+			<li>Cross on Front Face and Back Face, align to 12.</li>
+			<li>Flip the clock.</li>
+			<li>Solve the corners</li>
+		</ol>
+		He called that method "FDCM" (Fahmi Double Cross Method). Well, we don't know anyone who documented this method during that time. Personally, I consider this an "idea" and not yet a method.</p>
+		
+		<p>Here is some demonstration on simulator by my friend, <a href="https://www.worldcubeassociation.org/results/p.php?i=2010WICA01">Cahyo Galuh Wicaksono</a>, pretty decent attempt on his third day after learning clock:</p>
+		
+		<p align="center"><iframe width="420" height="315" src="https://www.youtube.com/embed/GBn1J6AB5zg" frameborder="0" allowfullscreen></iframe></p>
+		
+		<p>Notice after he flips the clock, the cross on the backside is already solved.</p>
+		
+		<p>There is a cuber I know who regularly use this method in official competition, <a href="https://www.worldcubeassociation.org/results/p.php?i=2010KUSU02">Didiet Aditya Bayu Kusuma</a>.</p>
+		
+		<p>However, this method has drawbacks: A little math and memorization during inspection. But, I think one can be good at it with practice.</p>
+		
+		<h2>The Method</h2>
+		
+		<p>The easiest way to explain the method is by an example. Scramble the clock with:</p>
+		
+		<pre>
+		UUdd u=-2,d=-2 / dUdU  u=2,d=2 / ddUU u=-1,d=-5 / UdUd u=2,d=-3 /
+		dUUU u=4 / UdUU u=6 / UUUd u=-5 / UUdU u=-3 / UUUU u=5 / dddd d=0 /
+		dUdU
+		</pre>
+		
+		<p>Your clock should be look like this</p>
+		
+		Front:
+		<pre>
+		12  9  5
+		 6  8  6
+		11 10  8
+		</pre>
+		
+		Back:
+		<pre>
+		 7  6 12
+		10  8  5
+		 4  3  1
+		</pre>
+		
+		<h3>1. Inspection Phase</h3>
+		
+		<p>Here is the drawbacks of this idea: <b>doing math</b> and <b>memorization</b> during inspection! And remember, we only have 15 seconds to do it. Thankfully, the math is simple, it's just 4 subtractions.</p>
+		
+		<p>Now look at the Back Face, do the following:</p>
+		
+		<ul>
+			<li>Substract center number (8) with <b>top edge</b> number (6) = 2</li>
+			<li>Substract center number (8) with <b>left edge</b> number (10) = -2</li>
+			<li>Substract center number (8) with <b>bottom edge</b> number (3) = 5</li>
+			<li>Substract center number (8) with <b>right edge</b> number (5) = 3</li>
+		</ul>
+		
+		<p>[Notice it's counter clockwise starting from top edge]</p>
+		
+		<p>So you need to memo: <b>2, -2, 5, 3</b></p>
+		
+		<h3>2. Double Cross Phase</h3>
+		
+		<p>Start from the Front Face</p>
+		
+		<ul>
+			<li></li>
+		</ul>
+		
+		<h3>3. Solve Corners</h3>
+		<p>Solve corners like usual.</p>
+		<div id="update">Copyright 2015 Ardianto Satriawan.</div>
+	</div>
+</body>
+</html>
