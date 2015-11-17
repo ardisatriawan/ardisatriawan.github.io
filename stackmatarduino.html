@@ -3,11 +3,211 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<title>Ardianto Satriawan</title>
+	<title>Stackmat Display Timer using Arduino UNO R3 - Ardianto Satriawan</title>
 </head>
 <body>
 	<div class="container">
-		<h1>Under Construction</h1>
+		<h1>Stackmat Display Timer using Arduino UNO R3</h1>
+		
+		<p>First of all, I am not expert in writing in English. So, I apologize if there is any mistakes in grammar, diction, structure, or whatever. I will try my best to avoid any mistake. So, here we go.</p>
+		
+		<h2>Stackmat Timer</h2>
+		
+		<p>Stackmat Timer is a time measuring device, usually it is used in <a href="http://en.wikipedia.org/wiki/Sport_stacking">Sport Stacking</a>. It is very interesting sport, but personally I don’t put any effort learning it. However, I am (was? ~still interested, but not as much four or five years ago) a big fan of Rubik’s Cube solving. The <a href="http://worldcubeassociation.org">World Cube Association</a>, governing body for twisty puzzles solving also uses Stackmat Timer as time measuring device.</p>
+		
+		<p>Currently, there is two types of Stackmat Timer accepted as official timer by the WCA, Stackmat Timer v2 and Stackmat Pro Timer. The former able to measure until centiseconds, while the latter has milliseconds accuracy. I only have Stackmat v2 though.</p>
+		
+		<p align="center"><a href="http://blogs.itb.ac.id/satriawan/files/2015/04/DSC07856aa.jpg"><img src="http://blogs.itb.ac.id/satriawan/files/2015/04/DSC07856aa-300x110.jpg" alt="Stackmat timer v2" height="110" width="300"></a></p>
+		
+		<p align="center">Stackmat timer v2</p>
+		
+		<p>But, in a competition, using stackmats is not enough to make thing interesting. We need displays to show the time measured by stackmats, so the spectators can see how fast the competitor is.</p>
+		
+		<p align="center"><a href="http://blogs.itb.ac.id/satriawan/files/2015/04/tournament_display.jpg"><img class="wp-image-70 size-medium" src="http://blogs.itb.ac.id/satriawan/files/2015/04/tournament_display-300x198.jpg" alt="tournament_display" height="198" width="300"></a></p>
+		
+		<p align="center">Stackmat Display</p>
+		
+		<p>The timer and the display are connected using 2.5 mm to 2.5 mm, male-to-male, mono audio cable. However the problem is, the displays are expensive. It costs IDR 2,000,000 (~150 USD at the time) at our favorite <a href="http://www.jocubes.com">cubing store</a>. So, why don’t just we build one? I thought it would be cheaper, just a few seven segments and microcontrollers. It just displays the time showed by the Stackmat, should be easy.</p>
+		
+		<h2>Microcontrollers</h2>
+		
+		<p>Now comes the problem, I know nothing about microcontrollers (hey! you have a degree in electrical engineering, what a shame!). I only had a few experiences using microcontrollers, using 8051 when I took <a title="The link is new version of the course, I didn't find the old one." href="http://labdasar.ee.itb.ac.id/index-2-el3214-1314-sem2.html">EL3096 – Microprocessor System and Lab</a>. However using assembly and all it hassles making me put no interest in it. My other experience, however make me interested. When I was doing <a href="http://blendedlearning.itb.ac.id/web5/index.php/topik/detail/29449">EL5108 – Intelligent Control System</a> final project, my team mates showed me that using Arduino UNO make it easy to build hardware, just connect a few additional displays (it was an LCD, it is a seven segments in this project), setup some input, and program it via USB. Done!</p>
+		
+		<p>The programming is just like regular programming on PC, with minor differences. I have to admit that I know much more about PC programming than micros. So, Arduino UNO is my choice. I bought Arduino UNO R3 clone (why clone? it’s cheaper of course).</p>
+		
+		<p align="center"><a href="http://blogs.itb.ac.id/satriawan/files/2015/04/ArduinoUno_R3_Front_450px.jpg"><img class="size-medium wp-image-72" src="http://blogs.itb.ac.id/satriawan/files/2015/04/ArduinoUno_R3_Front_450px-300x197.jpg" alt="Arduino UNO R3" height="197" width="300"></a></p>
+		
+		<p align="center">Arduino UNO R3</p>
+		
+		<p>It has 13 Digital Input/Output ports, also able to transmit and receive serial (TTL). Perfect for this project.</p>
+		
+		<h2>Seven Segment Displays</h2>
+		
+		<p>I knew that I would need 5 seven segments, so I need 5×8 = 40 digital I/O ports, but there is only 13 of it. At first, I would like to use 5 BCD-to-seven-segment IC (after some reading I got 7447 for common anode and 7449 for common cathode) and multiplexing technique, but then I imagined that my breadboard will be full of resistors and make the connections harder to trace. So I need another approach.</p>
+		
+		<p>As making stackmat displays is not anything new, I read <a href="https://www.worldcubeassociation.org/results/p.php?i=2007WEIN01">Florian Weingarten</a>‘s approach described on his <a href="http://hackvalue.de/hv_atmel_stackmat">website</a>. He was using MAX7219 to drive 5 seven segments, the segments also do not need any resistors, which is perfect!</p>
+		
+		<p>MAX7219 (<a href="http://www.ee.mut.ac.th/datasheet/doc/max7219.pdf">datasheet</a>) is actually for driving LED matrix but it can also drives up to until 8 <strong>common cathode</strong> seven segments. After reading tutorials on Arduino website, I found two very useful links for implement this in Arduino:</p>
+		
+		<ul>
+			<li><a href="http://playground.arduino.cc/Main/LedControl">The LedControl Library</a></li>
+			<li><a href="The%20MAX7219 and MAX7221 Led drivers">The MAX7219 and MAX7221 Led drivers</a></li>
+		</ul>
+		
+		<p>The first link provides the libraries and the second one provides the schematic. However, for the bypass capacitor, I follow Florian’s value, 100 nF, not 100 nF + 1 uF like in the links.</p>
+		
+		<p>This is the schematic provided by second link, just click to enlarge.</p>
+		
+		<p align="center"><a href="http://blogs.itb.ac.id/satriawan/files/2015/04/MAX72XX_SPI.jpg"><img class="size-medium wp-image-77" src="http://blogs.itb.ac.id/satriawan/files/2015/04/MAX72XX_SPI-201x300.jpg" alt="MAX 7219 circuits, however I just using 100 nF capacitor." height="300" width="201"></a></p>
+		
+		<p align="center">MAX 7219 circuits, however I just using 100 nF capacitor and one MAX7219.</p>
+		
+		<p align="center"><a href="http://blogs.itb.ac.id/satriawan/files/2015/04/Seg7Matrix.jpg"><img class="wp-image-78 size-medium" src="http://blogs.itb.ac.id/satriawan/files/2015/04/Seg7Matrix-300x206.jpg" alt="Seg7Matrix" height="206" width="300"></a></p>
+		
+		<p align="center">Seven segment arrays – I just use digits 4 to 0</p>
+		
+		<p>After few hours of cutting cables and making connection in the breadboard. I tried few examples from the library, and it works flawlessly.</p>
+		
+		<p>So, I spent next few hours to code a function that shows integer inputted in the segments. Also tried to make the digit 4 and digit 2 turns on the dot of the segments. It works out very well.</p>
+		
+		<h2>Reading Serial Output</h2>
+		
+		<p>Done with seven segments, the next thing to do is implement how to read the output of the Stackmat. First you will need 2.5 mm mono audio jack. All electronic store said that it is obsolete thing and hard to find, so I bought 3.5 mm stereo audio jack, and 3.5 mm to 2.5 mm audio jack converter.</p>
+		
+		<p>At first, I thought I can directly plug the output of the stackmat directly to Arduino, as I feel the output is TTL. So, I tried and it can’t. The Stackmat can not works properly when it is directly connected. I could not even start the Stackmat!</p>
+		
+		<p>After some reading again, turns out that the Arduino needs TTL input, and the output of the stackmat provides RS232 signals (not TTL!). So I need to convert those signal. So, I read Florian’s website again, he was using MAX232.</p>
+		
+		<p>MAX232 (<a href="http://www.ti.com/lit/ds/symlink/max232.pdf">datasheet</a>) actually converts TTL signal to RS232, but it is can also do the otherwise. So, I need RS232 input (pin 8 or 13) and TTL output (pin 9 or 12). So, I am using pin 13 for input from stackmat and pin 12 for input to Arduino (pin 0).</p>
+		
+		<p>For the circuits, I just follow the circuits provided by the datasheet below. Just click to enlarge.</p>
+		
+		<p align="center"><img class="size-medium wp-image-79" src="http://blogs.itb.ac.id/satriawan/files/2015/04/Screenshot_18-300x178.png" alt="MAX232 circuits." height="178" width="300"></a></p>
+		
+		<p align="center">MAX232 circuits</p>
+		
+		<p>The next is programming parts, I tried the example in the following links:</p>
+		
+		<ul>
+			<li><a href="http://arduino.cc/en/Serial/read">Arduino read() functions</a></li>
+		</ul>
+		
+		<p>And changed the baud rate to 1200, again taking Florian’s experience as reference. However, every time I compiled the example, I got the following Error:</p>
+		
+		<ul>
+			<li>avrdude: stk500_getsync(): not in sync: resp=0×00</li>
+		</ul>
+		
+		<p>That forced me to do some google searching again, turns out that the solution is disconnect wire from pin 0 of Arduino, as the uploader uses it. Thanks to <a href="http://www.parkansky.com/arduino-error.htm">this link</a>.</p>
+		<p>After compiling the program and reading the serial monitor, it is confirmed that the Arduino can receive data from stackmat!</p>
+		
+		<h2>Making the Whole System</h2>
+		
+		<p>Well, now I have two different modules: (1) reading the output of the stackmat and (2) displays number into seven segments. So, I need to connect those two.</p>
+		
+		<p>First, I need to understand the protocol the stackmat uses. Yet again, Florian’s website comes handy. The stackmat protocol is 9 byte characters. I wrote this in hexadecimal as Arduino serial monitor only understand DEC, BIN, or HEX, not ASCII representation of it.</p>
+		
+		<ul>
+			<li>Byte 0: Command byte. Possible byte: (0×49, 0×41, 0×53, 0x4C, 0×52, 0×43 or 0×20).</li>
+			<li>Byte 1: Minute’s digit in ASCII. Possible byte: (0×30 – 0×39)</li>
+			<li>Byte 2: Tens of seconds’ digit in ASCII. Possible byte: (0×30 – 0×39).</li>
+			<li>Byte 3: Ones of seconds’ digit in ASCII. Possible byte: (0×30 – 0×39).</li>
+			<li>Byte 4: Tens of centiseconds’ digit in ASCII. Possible byte: (0×30 – 0×39).</li>
+			<li>Byte 5: Ones of seconds’ digit in ASCII. Possible byte: (0×30 – 0×39).</li>
+			<li>Byte 6: Checksum, the sum of digits in the stackmat plus 64 (example: if the stackmat shows 1:23.45 the checksum would be 1+2+3+4+5+64 = 79 = 0x4F).</li>
+			<li>Byte 7: Line feed, it is <strong>always</strong> 0x0A.</li>
+			<li>Byte 8: Carriage return as delimiter, it is <strong>always</strong> 0x0D.</li>
+		</ul>
+		
+		<p>Florian made mistake with byte 7 and 8 exchanged (or may be it is just my stackmat?).</p>
+		
+		<p>Because I don’t want to make additional features like Florian did, I only need to display the times to the segments I just need Byte 1 to Byte 6. So, in the program, I implement the following pseudo-code:</p>
+		
+		<pre>
+		Convert Byte1-5 to integer;
+		Calculate its checksum;
+		if checksum == Byte 6
+			Display it to the seven segments;
+		</pre>
+		
+		<p>However, the codes provide strange behavior of the segments. It only display start and final results. My guess was the checksum is not properly calculated when the timer is running.</p>
+		
+		<p>So, I removed the checksum calculation, and voila! It works perfectly.</p>
+		
+		<pre>
+		Convert Byte1-5 to integer;
+		Display it to seven segments;
+		</pre>
+		
+		<p>I was happy to see it works perfectly.</p>
+		
+		<h2>Full Schematic and Full Code</h2>
+		
+		<p>You can obtain full schematics and codes here:</p>
+		
+		<ul>
+			<li><a href="https://www.dropbox.com/s/yz6f5wvdwjigate/Display.png?dl=0">Schematics</a>.</li>
+			<li><a href="https://www.dropbox.com/s/mv1t1e9oqpusntw/display.ino?dl=0">Code</a>, you need the <a href="http://playground.arduino.cc/Main/LedControl">LedControl library</a>.</li>
+		</ul>
+		
+		<h2>Photos and Videos</h2>
+		
+		<p>I already shared a photo on Facebook. You can <a href="https://www.facebook.com/photo.php?fbid=10206365350563485&amp;set=a.2444817250675.136083.1559205693&amp;type=1">check it out</a>. But I will upload here anyway:</p>
+		
+		<p align="center"><a href="http://blogs.itb.ac.id/satriawan/files/2015/04/stackmat-done.jpg"><img class="wp-image-82 size-medium" src="http://blogs.itb.ac.id/satriawan/files/2015/04/stackmat-done-300x168.jpg" alt="stackmat done" height="168" width="300"></a></p>
+		
+		<p align="center">Running!</p>
+		
+		<p><strong>Video:</strong></p>
+		
+		<p align="center"><iframe src="https://www.youtube.com/embed/KMP_0l7Qw9I?feature=oembed" allowfullscreen="" frameborder="0" height="360" width="640"></iframe></p>
+		
+		<h2>Costs</h2>
+		
+		<p>Here is the cost of all the components used:</p>
+		
+		<ul>
+			<li>Breadboard, already have. However, you will need two more horizontal parts from other breadboard. But if you need to buy: 2 breadboards, IDR 40,000 each = IDR 80,000.</li>
+		</ul>
+		
+		<p>The following components are bought from <a href="http://www.central-electronic.com/">Central Electronics</a>, by coming to their store, not ordering online.</p>
+		
+		<ul>
+			<li><a href="http://www.central-electronic.com/index.php?route=product/product&amp;product_id=50">Arduino UNO R3</a>, IDR 205,000.</li>
+			<li>Male-to-male jumper cable with header. 2 sets, IDR 20,000 each = IDR 40,000.</li>
+			<li>Few cables with 5 colors, IDR 8,500.</li>
+			<li>a 10 K resistors, IDR 150</li>
+			<li>Five 7-segments common cathode, IDR 3,600 each = IDR 18,000</li>
+			<li>an IC MAX7219, IDR 93,500 (holy *&amp;#*, that was expensive!)</li>
+		</ul>
+		
+		<p>And from <a href="http://www.yellowpages.co.id/directory/tulus-electronics">Tulus Electronics</a>, they don’t sell anything online.</p>
+		
+		<ul>
+			<li>a 100 nF capacitor, IDR 500</li>
+			<li>Five 1 uF electrolyte capacitor, IDR 200 each = IDR 1000</li>
+			</ul>
+			<p>From other stores:</p>
+			<ul>
+			<li>a 3.5 mm to 2.5 mm stereo jack converter, IDR 5,000</li>
+			<li>3.5 mm stereo jack + cables. Already have it. If you have to buy, it is around IDR 10,000.</li>
+		</ul>
+		
+		<p>So the total needed is IDR 446,650 (~USD 35) include breadboard and 3.5 mm stereo jack. But I already have them. So, I spent IDR 356,650, that’s about <strong>USD 28</strong>. Not bad!</p>
+		
+		<h2>What to do Next:</h2>
+		
+		<ul>
+			<li>Implement in PCB and bigger seven segments,</li>
+			<li>Get a good packaging,</li>
+			<li>Trying to implement the programs using smaller and cheaper micros, Arduino Nano for example.</li>
+		</ul>
+		
+		<p>But I’m not gonna do it in the near future.</p>
+		
+		<p>----------</p>
+		
+		<p>Original document at <a href="http://blogs.itb.ac.id/satriawan/project/stackmat-display-timer-using-arduino-uno-r3/">Blogs ITB</a></p>
 		
 		<div id="update">Copyright 2015 Ardianto Satriawan.</div>
 	</div>
