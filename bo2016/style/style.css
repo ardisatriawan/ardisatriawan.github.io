@@ -12,26 +12,27 @@ body
 
 p
 { padding: 0 0 20px 0;
-  line-height: 1.7em;}
+  line-height: 1.7em;
+}
 
 img
 { border: 0;}
 
 h1, h2, h3, h4, h5, h6 
-{ font: normal 175% 'century gothic', arial, sans-serif;
+{ font: normal 175% 'Montserrat', arial, sans-serif;
   color: #43423F;
   margin: 0 0 15px 0;
   padding: 15px 0 5px 0;}
 
 h2
-{ font: normal 175% 'century gothic', arial, sans-serif;
-  color: #A4AA04;}
+{ font: normal 175% 'Montserrat', arial, sans-serif;
+  color: orangered;}
 
 h4, h5, h6
 { margin: 0;
   padding: 0 0 5px 0;
-  font: normal 120% arial, sans-serif;
-  color: #A4AA04;}
+  font: normal 120% 'Montserrat', sans-serif;
+  color: orangered;}
 
 h5, h6
 { font: italic 95% arial, sans-serif;
@@ -152,7 +153,12 @@ ul#menu li a
 
 ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
 { color: #FFF;
-  background: #1C2C3E url(menu_select.png) repeat-x;}
+  box-shadow: 0px 4px 2px -2px orangered inset;
+/*
+    border-bottom-style: ridge;
+  border-bottom-color: orangered; 
+*/
+}
 
 #site_content
 { width: 837px;
