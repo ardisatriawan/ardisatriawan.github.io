@@ -160,6 +160,14 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
 */
 }
 
+.notif{
+    background-color: orange;
+    text-align: center;
+    color: white;
+    padding-bottom: 7px;
+    padding-top:7px;
+}
+
 #site_content
 { width: 837px;
   overflow: hidden;
