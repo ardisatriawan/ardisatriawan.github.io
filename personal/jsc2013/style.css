@@ -1,0 +1,58 @@
+body {
+	font-family: Georgia;
+	background: black;
+	margin: 20px;
+	text-align: center;
+}
+
+h1 {
+	text-align: center;
+}
+
+h2 {
+	padding: 0px
+}
+
+p {
+	line-height: 150%
+}
+
+li {
+	line-height: 150%
+}
+
+td {
+	padding: 20px;
+}
+
+img {
+	border-radius: 15px;
+}
+
+sup {
+	font-size : 60%;
+}
+
+a {
+	text-decoration: none;
+}
+
+#update {
+	text-align: center;
+	font-size: 60%;
+}
+
+.container {
+	width: 800px;
+	background: #ffffff;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius: 15px;
+	text-align: left;
+	padding: 20px;
+}
+
+#menu {
+	text-align: center;
+	font-weight: bold;
+}
